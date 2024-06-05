@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema targetNamespace="https://qfield.net/XMLSchema/mmap2md/settings.xsd"
+           xmlns="https://qfield.net/XMLSchema/mmap2md/settings.xsd"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+>
+    <xs:element name="Settings" type="settingsType"/>
+
+    <xs:complexType name="settingsType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the root element type in the configuration file.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="CompileFormats" type="compileFormatsType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the collection of compile formats.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="compileFormatsType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the format collection type for compilation.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="CompileFormat" type="compileFormatType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the compile format.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="compileFormatType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the format type for compilation.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="TopicLayoutsMap" type="topicLayoutsMapType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the relationship between topics and their layouts.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TopicLayouts" type="topicLayoutsType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define topic layouts.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Replacements" type="replacementsType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the replacement rules.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+        <xs:attribute name="name" type="xs:string" default="">
+            <xs:annotation>
+                <xs:documentation>
+                    Define the compile format name.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="version" type="xs:string" default="0.0.1">
+            <xs:annotation>
+                <xs:documentation>
+                    Define the compile format version.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="topicLayoutsMapType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the map type for topic layouts.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Topic" type="topicType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the topic and its layout relationship.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="topicType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the topic type.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="layout" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation>
+                    Define the name of the topic layout.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="enabled" type="xs:boolean" default="true">
+            <xs:annotation>
+                <xs:documentation>
+                    Activate the specified topic layout.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="level" default="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Indicate the topic level for the layout application: 0 for the root level, and "leaf" for the leaf
+                    level.
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:union memberTypes="xs:nonNegativeInteger">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:NMTOKEN">
+                            <xs:enumeration value="leaf"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="order" type="xs:nonNegativeInteger" default="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Specify the order within the level to which the layout applies.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="with" default="any">
+            <xs:annotation>
+                <xs:documentation>
+                    Specify whether the layout applies to topics containing text, notes, both, or any.
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="text"/>
+                    <xs:enumeration value="notes"/>
+                    <xs:enumeration value="both"/>
+                    <xs:enumeration value="any"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="topicLayoutsType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the type for topic layouts.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Layout" type="layoutType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the layout for the topic.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="layoutType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the layout type.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="Head" type="headType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the layout for the section title.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Body" type="bodyType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the layout for the section content.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+        <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation>
+                    Specify the name for the topic layout.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="headType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the section title layout type.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="Prefix" type="contentType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Specify a prefix for the section title.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Suffix" type="contentType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Specify a suffix for the section title.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+        <xs:attribute name="visible" type="xs:boolean" default="true">
+            <xs:annotation>
+                <xs:documentation>
+                    Generate the section title.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="hashes" default="byLevel">
+            <xs:annotation>
+                <xs:documentation>
+                    Enclose the section title with hashes, based on the topic level or a specified number of hashes.
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:union memberTypes="xs:nonNegativeInteger">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:NMTOKEN">
+                            <xs:enumeration value="byLevel"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="levelOffset" type="xs:integer" default="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Increment or decrement the topic level by a specified offset.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="orderOffset" type="xs:integer" default="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Rearrange the topic order within a level by applying a specified offset.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="bodyType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the body type.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="Prefix" type="contentType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Specify a prefix for the section content.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Suffix" type="contentType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Specify a prefix for the section content.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+        <xs:attribute name="visible" type="xs:boolean" default="true">
+            <xs:annotation>
+                <xs:documentation>
+                    Generate the section content.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="contentType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the content type.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="inside" type="xs:boolean" default="true">
+                    <xs:annotation>
+                        <xs:documentation>
+                            If the value evaluates to true, insert content within the section title's hash symbols or
+                            before any child topics. If not, content should be placed outside of hash symbols or after
+                            all child topics.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="replacementsType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the replacement collection type.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Replacement" type="replacementType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the replacement rule.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="replacementType">
+        <xs:annotation>
+            <xs:documentation>
+                Define the replacement type.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="Replace" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the replacement pattern.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="With" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Define the replacement value.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+        <xs:attribute name="regExp" type="xs:boolean" default="false">
+            <xs:annotation>
+                <xs:documentation>
+                    Define the replacement pattern as either a Regular Expression or plain text.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+</xs:schema>
