@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<xs:schema targetNamespace="https://qfield.net/XMLSchema/mmap2md/settings.xsd"
-           xmlns="https://qfield.net/XMLSchema/mmap2md/settings.xsd"
+<xs:schema targetNamespace="https://qfield.net/XMLSchema/mmap2md/2024/settings"
+           xmlns="https://qfield.net/XMLSchema/mmap2md/2024/settings"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified"
 >
