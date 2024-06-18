@@ -263,13 +263,6 @@
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="orderOffset" type="xs:integer" default="0">
-            <xs:annotation>
-                <xs:documentation>
-                    Rearrange the topic order within a level by applying a specified offset.
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="bodyType">
